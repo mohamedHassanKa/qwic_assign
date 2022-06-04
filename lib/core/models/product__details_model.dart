@@ -61,4 +61,11 @@ class ProductDetails {
     data['motorWarranty'] = motorWarranty;
     return data;
   }
+
+  @override
+  bool operator ==(Object other) =>
+      other is ProductDetails && other.frameNumber == frameNumber;
+
+  @override
+  int get hashCode => frameNumber.hashCode;
 }

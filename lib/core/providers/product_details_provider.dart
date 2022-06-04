@@ -5,19 +5,21 @@ import 'package:qwic/core/services/product_details_service.dart/product_details_
 import 'package:qwic/core/models/product__details_model.dart';
 
 class ProductDetailsProvider extends ChangeNotifier {
+  ProductDetailsProvider(this._productDetailService);
   bool _isLoading = false;
   bool get isLoading => _isLoading;
-  final ProductDetailsService? _productDetailService = ProductDetailsService();
-  late ProductDetails? _productDetails;
+  final ProductDetailsService? _productDetailService;
+  late ProductDetails? _productDetails = ProductDetails();
   ProductDetails? get productDetail => _productDetails;
 
   void setStateAndNotifyListener(bool status) {
-    _isLoading = true;
+    _isLoading = status;
+    notifyListeners();
   }
 
-  Future<ProductDetails?> getProductDetails() async {
+  Future<void> getProductDetails() async {
+    setStateAndNotifyListener(true);
     _productDetails = await _productDetailService?.getProductDetails();
-
-    return _productDetails;
+    setStateAndNotifyListener(false);
   }
 }
